@@ -1,0 +1,29 @@
+name: Daily auto commit
+
+on:
+  schedule:
+    # 国际标准时间 16:00 ≈ 北京时间 0:00
+    - cron:  '0 16 * * *'
+  workflow_dispatch:    # 允许手动触发，方便测试
+
+jobs:
+  daily-file:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}   # 默认的 token 已能 push
+
+    - name: Generate file
+      run: |
+        mkdir -p data
+        echo "$(date '+%F %T') 自动生成" >> data/daily.log
+
+    - name: Commit & push
+      run: |
+        git config user.name  "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add data/daily.log
+        git commit -m "chore: daily auto commit $(date '+%F')"
+        git push
