@@ -34,9 +34,11 @@ jobs:
       - name: 显示环境变量（调试）
         run: |
           echo "NODE_ENV: $NODE_ENV"
-          echo "COZE_TOKEN 是否存在: ${{ env.COZE_TOKEN != '' }}"  # 不显示具体值，仅验证存在性
+          echo "COZE_TOKEN 是否存在: ${{ env.COZE_TOKEN  }}"  # 不显示具体值，仅验证存在性
           echo "当前日期: $(date +%F)"
-
+        env:
+          COZE_TOKEN: ${{ secrets.COZE_TOKEN }}
+          
       - name: 生成新闻内容
         run: |
           echo "开始生成新闻..."
