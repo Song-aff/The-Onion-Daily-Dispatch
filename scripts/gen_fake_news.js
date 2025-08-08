@@ -7,7 +7,8 @@ const token = process.env.COZE_TOKEN;
 
 
 if (!token) {
-  console.error('错误: 请设置环境变量 COZE_TOKEN')
+  console.error('错误: 未找到 COZE_TOKEN 环境变量')
+  console.error('当前环境变量列表:', Object.keys(process.env).filter(k => k.includes('COZE')))
   process.exit(1)
 }
 

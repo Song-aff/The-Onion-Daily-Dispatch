@@ -1,36 +1,67 @@
-name: Daily auto commit
+name: Daily Commit
 
 on:
   schedule:
-    - cron: '0 16 * * *' # UTC 16:00 ≈ 北京时间 00:00
-  workflow_dispatch:
+    - cron: '0 16 * * *'  # 每天 UTC 16:00 执行（北京时间 00:00）
+  workflow_dispatch:  # 允许手动触发
 
 jobs:
-  daily-file:
+  build:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Node.js
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 显示工作目录信息（调试）
+        run: |
+          pwd
+          ls -la
+          echo "当前分支: $(git rev-parse --abbrev-ref HEAD)"
+          echo "最新提交: $(git log -1 --oneline)"
+
+      - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 20.x
 
-      - name: Install dependencies
-        run: npm install
+      - name: 安装依赖（使用 pnpm）
+        run: |
+          npm install -g pnpm  # 确保 pnpm 可用
+          pnpm install  # 修复依赖管理工具不匹配问题
+          echo "依赖安装完成，检查 node_modules"
+          ls -la node_modules || echo "node_modules 不存在"
 
-      - name: Generate
+      - name: 显示环境变量（调试）
+        run: |
+          echo "NODE_ENV: $NODE_ENV"
+          echo "COZE_TOKEN 是否存在: ${{ env.COZE_TOKEN != '' }}"  # 不显示具体值，仅验证存在性
+          echo "当前日期: $(date +%F)"
+
+      - name: 生成新闻内容
+        run: |
+          echo "开始生成新闻..."
+          pnpm run generate  # 使用 pnpm 运行脚本
         env:
           COZE_TOKEN: ${{ secrets.COZE_TOKEN }}
-        run: npm run generate
 
-      - name: Commit & push
+      - name: 检查生成结果（调试）
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add "blog/$(date +%F)-news" || true
+          NEWS_DIR="blog/$(date +%F)-news"
+          echo "检查新闻目录: $NEWS_DIR"
+          if [ -d "$NEWS_DIR" ]; then
+            echo "目录存在，内容如下:"
+            ls -la "$NEWS_DIR"
+            echo "Markdown 内容预览:"
+            cat "$NEWS_DIR/index.md" | head -n 10  # 显示前 10 行
+          else
+            echo "错误: 新闻目录 $NEWS_DIR 未生成"
+            exit 1  # 生成失败时终止工作流
+          fi
+
+      - name: 提交更改
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add "blog/$(date +%F)-news"
           git diff --staged --quiet || git commit -m "chore: daily auto commit $(date +%F)"
           git push
