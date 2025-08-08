@@ -45,7 +45,7 @@ async function callCozeAPI(args = {}) {
   }
 }
 
-const template = (title, summary, content,img,tags=[1,2,3]) =>
+const template = (title, summary, content,img) =>
   `---
 title: "${title}"
 ---
