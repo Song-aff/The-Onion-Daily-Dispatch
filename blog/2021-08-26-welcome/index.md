@@ -1,29 +1,45 @@
 ---
-slug: welcome
 title: Welcome
-authors: [slorber, yangshun]
-tags: [facebook, hello, docusaurus]
 ---
+# 洋葱博客 - 自动生成假新闻的博客系统
 
-[Docusaurus blogging features](https://docusaurus.io/docs/blog) are powered by the [blog plugin](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-content-blog).
+## 项目简介
 
-Here are a few tips you might find useful.
+这是一个基于 Docusaurus 构建的洋葱博客项目，专门用于自动生成和发布假新闻内容。项目集成了 AI 内容生成功能，能够自动创建具有讽刺性和幽默感的假新闻文章。
 
-<!-- truncate -->
+## 核心功能
 
-Simply add Markdown files (or folders) to the `blog` directory.
+### 🤖 AI 自动内容生成
 
-Regular blog authors can be added to `authors.yml`.
+-   通过 Coze API 自动生成假新闻标题、摘要和正文内容
+-   支持关键词驱动的新闻主题生成
+-   自动生成配图，增强新闻的可视化效果
 
-The blog post date can be extracted from filenames, such as:
+### 📝 内容管理
 
-- `2019-05-30-welcome.md`
-- `2019-05-30-welcome/index.md`
+-   自动创建以日期命名的博客文件夹（格式：YYYY-MM-DD-news）
+-   生成标准化的 Markdown 格式文章
+-   自动下载并保存配图到本地
 
-A blog post folder can be convenient to co-locate blog post images:
+### 🎭 洋葱新闻特色
 
-![Docusaurus Plushie](./docusaurus-plushie-banner.jpeg)
+-   生成具有讽刺性和幽默感的假新闻
+-   模拟真实新闻的格式和结构
+-   提供娱乐性的阅读体验
 
-The blog supports tags as well!
+## 技术架构
 
-**And if you don't want a blog**: just delete this directory, and use `blog: false` in your Docusaurus config.
+-   **前端框架**: Docusaurus - 现代化的静态网站生成器
+-   **内容生成**: Coze API - AI 驱动的文本生成
+-   **图片处理**: 自动下载和本地存储
+-   **文件管理**: 基于日期的文件夹组织结构
+
+## 项目特色
+
+-   🚀 **全自动化**: 一键生成完整的新闻文章
+-   📅 **时间管理**: 按日期自动组织内容
+-   🖼️ **多媒体支持**: 自动配图增强视觉效果
+-   🎯 **主题定制**: 支持关键词驱动的新闻主题
+-   📱 **响应式设计**: 适配各种设备访问
+
+这个项目为喜欢洋葱新闻的用户提供了一个自动化的内容生成平台，让讽刺性新闻的创作变得更加便捷和有趣。

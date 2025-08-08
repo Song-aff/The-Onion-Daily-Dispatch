@@ -1,41 +1,42 @@
-# Website
+# 洋葱博客 - 自动生成假新闻的博客系统
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+## 项目简介
 
-## Installation
+这是一个基于 Docusaurus 构建的洋葱博客项目，专门用于自动生成和发布假新闻内容。项目集成了 AI 内容生成功能，能够自动创建具有讽刺性和幽默感的假新闻文章。
 
-```bash
-yarn
-```
+## 核心功能
 
-## Local Development
+### 🤖 AI 自动内容生成
 
-```bash
-yarn start
-```
+-   通过 Coze API 自动生成假新闻标题、摘要和正文内容
+-   支持关键词驱动的新闻主题生成
+-   自动生成配图，增强新闻的可视化效果
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+### 📝 内容管理
 
-## Build
+-   自动创建以日期命名的博客文件夹（格式：YYYY-MM-DD-news）
+-   生成标准化的 Markdown 格式文章
+-   自动下载并保存配图到本地
 
-```bash
-yarn build
-```
+### 🎭 洋葱新闻特色
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+-   生成具有讽刺性和幽默感的假新闻
+-   模拟真实新闻的格式和结构
+-   提供娱乐性的阅读体验
 
-## Deployment
+## 技术架构
 
-Using SSH:
+-   **前端框架**: Docusaurus - 现代化的静态网站生成器
+-   **内容生成**: Coze API - AI 驱动的文本生成
+-   **图片处理**: 自动下载和本地存储
+-   **文件管理**: 基于日期的文件夹组织结构
 
-```bash
-USE_SSH=true yarn deploy
-```
+## 项目特色
 
-Not using SSH:
+-   🚀 **全自动化**: 一键生成完整的新闻文章
+-   📅 **时间管理**: 按日期自动组织内容
+-   🖼️ **多媒体支持**: 自动配图增强视觉效果
+-   🎯 **主题定制**: 支持关键词驱动的新闻主题
+-   📱 **响应式设计**: 适配各种设备访问
 
-```bash
-GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+这个项目为喜欢洋葱新闻的用户提供了一个自动化的内容生成平台，让讽刺性新闻的创作变得更加便捷和有趣。

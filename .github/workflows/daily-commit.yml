@@ -2,7 +2,7 @@ name: Daily auto commit
 
 on:
   schedule:
-    - cron: '0 16 * * *'   # UTC 16:00 ≈ 北京时间 00:00
+    - cron: '0 16 * * *' # UTC 16:00 ≈ 北京时间 00:00
   workflow_dispatch:
 
 jobs:
@@ -14,25 +14,23 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Generate daily file
-        run: |
-          set -e
-          dir="blog/$(date +%F)-news"
-          file="$dir/index.md"
-          mkdir -p "$dir"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-          if [[ -f "$file" ]]; then
-            # 文件已存在，追加
-            echo "ci自动生成" >> "$file"
-          else
-            # 文件不存在，创建并写入首行
-            echo "ci自动生成" > "$file"
-          fi
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate
+        env:
+          COZE_TOKEN: ${{ secrets.COZE_TOKEN }}
+        run: node gen_fake_news.js
 
       - name: Commit & push
         run: |
-          git config user.name  "github-actions[bot]"
+          git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add "blog/$(date +%F)-news"
-          git commit -m "chore: daily auto commit $(date +%F)"
+          git add "blog/$(date +%F)-news" || true
+          git diff --staged --quiet || git commit -m "chore: daily auto commit $(date +%F)"
           git push
