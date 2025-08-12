@@ -99,7 +99,7 @@ const writeToFile = (content, img) => {
   // 使用项目根目录而不是当前脚本目录
   const projectRoot = path.resolve(__dirname, '..')
   const folderPath = path.join(projectRoot, 'blog', folderName)
-  const filePath = path.join(folderPath, 'index.md')
+  const filePath = path.join(folderPath, 'index.mdx')
 
   // 检查文件夹是否已存在
   if (fs.existsSync(folderPath)) {
